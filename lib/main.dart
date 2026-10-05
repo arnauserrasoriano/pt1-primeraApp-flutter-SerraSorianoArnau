@@ -25,11 +25,25 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
+  var generatedWords =
+      <
+        WordPair
+      >[]; //Creem una nova llista per guardar els WordPair generats. Aquesta llista s'inicialitza com a buida.
+  var current =
+      WordPair.random(); //Creem una variable current que conté un WordPair aleatori. Aquesta variable s'inicialitza amb un WordPair aleatori generat per la funció random() de la classe WordPair.
 
+  MyAppState() {
+    //Constructor de la classe MyAppState. Aquest constructor s'executa quan es crea una nova instància de la classe MyAppState. En aquest cas, el constructor afegeix el WordPair aleatori generat a la llista generatedWords.
+    generatedWords.add(current);
+  }
   void getNext() {
-    current = WordPair.random();
-    notifyListeners();
+    current =
+        WordPair.random(); //Generem un nou WordPair aleatori i l'assignem a la variable current.
+
+    generatedWords.add(
+      current,
+    ); //Afegim el nou WordPair generat a la llista generatedWords.
+    notifyListeners(); //Notifiquem als widgets que escolten aquest ChangeNotifier que hi ha hagut un canvi en l'estat. Això farà que els widgets es tornin a construir amb el nou estat.
   }
 
   // ↓ Add the code below.
@@ -196,11 +210,10 @@ class FavoritesPage extends StatelessWidget {
             '${appState.favorites.length} favorites:',
           ),
         ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
+        for (var pair
+            in appState
+                .generatedWords) //Per cada WordPair generat, creem un ListTile amb el text del WordPair en minúscules.
+          ListTile(title: Text(pair.asLowerCase)),
       ],
     );
   }
