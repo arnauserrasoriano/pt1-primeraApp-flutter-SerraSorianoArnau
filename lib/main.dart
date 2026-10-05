@@ -32,17 +32,15 @@ class MyAppState extends ChangeNotifier {
   var current =
       WordPair.random(); //Creem una variable current que conté un WordPair aleatori. Aquesta variable s'inicialitza amb un WordPair aleatori generat per la funció random() de la classe WordPair.
 
-  MyAppState() {
-    //Constructor de la classe MyAppState. Aquest constructor s'executa quan es crea una nova instància de la classe MyAppState. En aquest cas, el constructor afegeix el WordPair aleatori generat a la llista generatedWords.
-    generatedWords.add(current);
-  }
   void getNext() {
+    generatedWords.insert(
+      0,
+      current,
+    ); //Afegim el nou WordPair generat a la llista generatedWords.
+
     current =
         WordPair.random(); //Generem un nou WordPair aleatori i l'assignem a la variable current.
 
-    generatedWords.add(
-      current,
-    ); //Afegim el nou WordPair generat a la llista generatedWords.
     notifyListeners(); //Notifiquem als widgets que escolten aquest ChangeNotifier que hi ha hagut un canvi en l'estat. Això farà que els widgets es tornin a construir amb el nou estat.
   }
 
@@ -137,33 +135,53 @@ class GeneratorPage extends StatelessWidget {
       icon = Icons.favorite_border;
     }
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
+    return Column(
+      //Creem un widget Column que conté una llista de widgets. Aquesta llista conté un ListView que mostra els WordPair generats, un BigCard que mostra el WordPair actual, i dos botons per afegir o eliminar el WordPair actual dels favorits i per generar un nou WordPair.
+      children: [
+        Expanded(
+          child: ListView(
             children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
+              for (var pair
+                  in appState
+                      .generatedWords) //Per cada WordPair generat, creem un ListTile amb el text del WordPair en minúscules i centrat.
+                ListTile(
+                  title: Text(
+                    pair.asLowerCase,
+                    textAlign: TextAlign.center,
+                  ), //Per cada WordPair generat, creem un ListTile amb el text del WordPair en minúscules i centrat.
+                ),
             ],
           ),
-        ],
-      ),
+        ),
+        Center(
+          child: BigCard(pair: pair),
+        ), //Creem un widget Center que conté un BigCard que mostra el WordPair actual. El BigCard és un widget personalitzat que mostra el WordPair en un estil més gran i amb un fons de color.
+
+        SizedBox(height: 10),
+
+        Row(
+          //Creem un widget Row que conté una llista de widgets. Aquesta llista conté dos botons per afegir o eliminar el WordPair actual dels favorits i per generar un nou WordPair.
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                appState.toggleFavorite();
+              },
+              icon: Icon(icon),
+              label: Text('Like'),
+            ),
+            SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () {
+                appState.getNext();
+              },
+              child: Text('Next'),
+            ),
+          ],
+        ),
+
+        SizedBox(height: 20),
+      ],
     );
   }
 }
