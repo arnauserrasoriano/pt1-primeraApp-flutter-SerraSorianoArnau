@@ -89,10 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isCompact = constraints.maxWidth < 450;
-        final pageContent = Container(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          child: page,
-        );
+        final pageContent = MainContent(child: page);
 
         return Scaffold(
           body: isCompact
@@ -145,6 +142,20 @@ class _MyHomePageState extends State<MyHomePage> {
               : null,
         );
       },
+    );
+  }
+}
+
+class MainContent extends StatelessWidget {
+  const MainContent({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: child,
     );
   }
 }
