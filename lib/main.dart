@@ -228,9 +228,7 @@ class FavoritesPage extends StatelessWidget {
             '${appState.favorites.length} favorites:',
           ),
         ),
-        for (var pair
-            in appState
-                .generatedWords) //Per cada WordPair generat, creem un ListTile amb el text del WordPair en minúscules.
+        for (var pair in appState.favorites)
           ListTile(title: Text(pair.asLowerCase)),
       ],
     );

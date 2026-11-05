@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile GTK compatibility schema",
+      "type": "shell",
+      "command": "mkdir -p '${workspaceFolder}/build/linux/gtk-schemas' && glib-compile-schemas --targetdir='${workspaceFolder}/build/linux/gtk-schemas' '${workspaceFolder}/linux/runner/compat-schemas'",
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}

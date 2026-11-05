@@ -1,0 +1,6 @@
+{
+    "dart.showTodos": false,
+    "dart.env": {
+        "GSETTINGS_SCHEMA_DIR": "build/linux/gtk-schemas"
+    }
+}

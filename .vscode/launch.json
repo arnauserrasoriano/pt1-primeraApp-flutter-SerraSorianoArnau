@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter (Linux)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "linux",
+      "preLaunchTask": "Compile GTK compatibility schema",
+      "env": {
+        "GDK_BACKEND": "x11",
+        "GSETTINGS_SCHEMA_DIR": "${workspaceFolder}/build/linux/gtk-schemas"
+      }
+    }
+  ]
+}
