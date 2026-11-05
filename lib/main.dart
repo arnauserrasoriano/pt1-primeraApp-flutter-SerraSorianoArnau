@@ -88,38 +88,61 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        final isCompact = constraints.maxWidth < 450;
+        final pageContent = Container(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          child: page,
+        );
+
         return Scaffold(
-          body: Row(
-            children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600, // ← Here.
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
+          body: isCompact
+              ? pageContent
+              : Row(
+                  children: [
+                    SafeArea(
+                      child: NavigationRail(
+                        extended: constraints.maxWidth >= 600,
+                        destinations: [
+                          NavigationRailDestination(
+                            icon: Icon(Icons.home),
+                            label: Text('Home'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.favorite),
+                            label: Text('Favorites'),
+                          ),
+                        ],
+                        selectedIndex: selectedIndex,
+                        onDestinationSelected: (value) {
+                          setState(() {
+                            selectedIndex = value;
+                          });
+                        },
+                      ),
                     ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.favorite),
-                      label: Text('Favorites'),
-                    ),
+                    Expanded(child: pageContent),
                   ],
+                ),
+          bottomNavigationBar: isCompact
+              ? NavigationBar(
                   selectedIndex: selectedIndex,
                   onDestinationSelected: (value) {
                     setState(() {
                       selectedIndex = value;
                     });
                   },
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
-                ),
-              ),
-            ],
-          ),
+                  destinations: [
+                    NavigationDestination(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.favorite),
+                      label: 'Favorites',
+                    ),
+                  ],
+                )
+              : null,
         );
       },
     );
