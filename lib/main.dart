@@ -149,6 +149,11 @@ class GeneratorPage extends StatelessWidget {
                     pair.asLowerCase,
                     textAlign: TextAlign.center,
                   ), //Per cada WordPair generat, creem un ListTile amb el text del WordPair en minúscules i centrat.
+                  trailing: Icon(
+                    appState.favorites.contains(pair)
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                  ),
                 ),
             ],
           ),
